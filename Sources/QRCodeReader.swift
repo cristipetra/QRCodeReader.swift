@@ -32,6 +32,10 @@ protocol QRCodeReaderLifeCycleDelegate: class {
   func readerDidStopScanning()
 }
 
+protocol QRCodeReaderOptionDelegate: class {
+    func readerOpenPhotosScanning()
+}
+
 /// Reader object base on the `AVCaptureDevice` to read / scan 1D and 2D codes.
 public final class QRCodeReader: NSObject, AVCaptureMetadataOutputObjectsDelegate {
   private let sessionQueue         = DispatchQueue(label: "session queue")
@@ -265,6 +269,10 @@ public final class QRCodeReader: NSObject, AVCaptureMetadataOutputObjectsDelegat
     }
     catch _ { }
   }
+    
+    public func openScanningPhotos() {
+        print("open scnnip photos")
+    }
 
   // MARK: - Managing the Orientation
 

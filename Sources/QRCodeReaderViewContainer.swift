@@ -56,8 +56,8 @@ public protocol QRCodeReaderDisplayable {
 
 /// The `QRCodeReaderContainer` structure embed the view displayed by the controller. The embeded view must be conform to the `QRCodeReaderDisplayable` protocol.
 public struct QRCodeReaderContainer {
-  let view: UIView
-  let displayable: QRCodeReaderDisplayable
+  public var view: UIView
+  public let displayable: QRCodeReaderDisplayable
 
   /**
    Creates a QRCode container object that embeds a given displayable view.
@@ -71,7 +71,7 @@ public struct QRCodeReaderContainer {
 
   // MARK: - Convenience Methods
 
-  func setupComponents(with builder: QRCodeReaderViewControllerBuilder) {
+  public func setupComponents(with builder: QRCodeReaderViewControllerBuilder) {
     displayable.setupComponents(with: builder)
   }
 }

@@ -52,6 +52,9 @@ public protocol QRCodeReaderViewControllerDelegate: class {
    - parameter reader: A code reader object informing the delegate about the cancellation.
    */
   func readerDidCancel(_ reader: QRCodeReaderViewController)
+    
+  func readerDidOpenScanPhotos(_ reader: QRCodeReaderViewController)
+    
 }
 
 extension QRCodeReaderViewControllerDelegate {
@@ -63,4 +66,6 @@ extension QRCodeReaderViewControllerDelegate {
    - parameter newCaptureDevice: The capture device that was switched to
    */
   public func reader(_ reader: QRCodeReaderViewController, didSwitchCamera newCaptureDevice: AVCaptureDeviceInput) {}
+    
+    //public func readerDidOpenScanPhotos(_ reader: QRCodeReaderViewController) { }
 }

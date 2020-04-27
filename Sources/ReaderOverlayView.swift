@@ -49,8 +49,8 @@ public final class ReaderOverlayView: UIView {
     overlay.backgroundColor = UIColor.clear.cgColor
     overlay.fillColor       = UIColor.clear.cgColor
     overlay.strokeColor     = UIColor.white.cgColor
-    overlay.lineWidth       = 3
-    overlay.lineDashPattern = [7.0, 7.0]
+    overlay.lineWidth       = 4
+    overlay.lineDashPattern = [10.0, 10.0]
     overlay.lineDashPhase   = 0
 
     return overlay
@@ -72,7 +72,7 @@ public final class ReaderOverlayView: UIView {
   }
   
   /// The default overlay color
-  public var defaultColor: UIColor = .white
+    public var defaultColor: UIColor = UIColor(red: 244.0 / 255.0, green: 210 / 255.0, blue: 62.0 / 255.0, alpha: 1.0)
   
   /// The overlay color when a valid code has been scanned
   public var highlightValidColor: UIColor = .green

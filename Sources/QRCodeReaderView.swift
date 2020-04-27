@@ -70,6 +70,15 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
 
     return ttb
   }()
+    
+    public lazy var infoLbl: UILabel? = {
+        let lbl = UILabel()
+        
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.textColor = .white
+        
+        return lbl
+    }()
 
   private weak var reader: QRCodeReader?
 
@@ -83,10 +92,12 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
     switchCameraButton?.isHidden = !builder.showSwitchCameraButton
     toggleTorchButton?.isHidden  = !builder.showTorchButton
     overlayView?.isHidden        = !builder.showOverlayView
+    
+    //infoLbl?.text = "Align QR Code/Barcode within frame to scan"
 
-    guard let cb = cancelButton, let scb = switchCameraButton, let ttb = toggleTorchButton, let ov = overlayView else { return }
+    guard let cb = cancelButton, let scb = switchCameraButton, let ttb = toggleTorchButton, let ov = overlayView, let il = infoLbl else { return }
 
-    let views = ["cv": cameraView, "ov": ov, "cb": cb, "scb": scb, "ttb": ttb]
+    let views = ["cv": cameraView, "ov": ov, "cb": cb, "scb": scb, "ttb": ttb, "il": il]
 
     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[cv]|", options: [], metrics: nil, views: views))
 
@@ -107,6 +118,15 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
       addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[ttb(50)]", options: [], metrics: nil, views: views))
       addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[ttb(70)]", options: [], metrics: nil, views: views))
     }
+    
+    
+    //addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[il(940)]", options: [], metrics: nil, views: views))
+    //addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[il]-|", options: [], metrics: nil, views: views))
+
+    //il.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0).isActive = true
+    //il.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30).isActive = true
+
+    
 
     for attribute in Array<NSLayoutConstraint.Attribute>([.left, .top, .right, .bottom]) {
       addConstraint(NSLayoutConstraint(item: ov, attribute: attribute, relatedBy: .equal, toItem: cameraView, attribute: attribute, multiplier: 1, constant: 0))
@@ -184,6 +204,10 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
     
     if let cb = cancelButton {
       addSubview(cb)
+    }
+    
+    if let il = infoLbl {
+        addSubview(il)
     }
 
     if let reader = reader {

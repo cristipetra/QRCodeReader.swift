@@ -29,7 +29,7 @@ import AVFoundation
 
 /// Convenient controller to display a view to scan/read 1D or 2D bar codes like the QRCodes. It is based on the `AVFoundation` framework from Apple. It aims to replace ZXing or ZBar for iOS 7 and over.
 public class QRCodeReaderViewController: UIViewController {
-  private let builder: QRCodeReaderViewControllerBuilder
+  public let builder: QRCodeReaderViewControllerBuilder
 
   /// The code reader object used to scan the bar code.
   public var codeReader: QRCodeReader {
@@ -81,6 +81,9 @@ public class QRCodeReaderViewController: UIViewController {
     }
 
     setupUIComponentsWithCancelButtonTitle(builder.cancelButtonTitle)
+    
+    setupUINavigationButtons()
+    
   }
 
   required public init?(coder aDecoder: NSCoder) {
@@ -118,8 +121,21 @@ public class QRCodeReaderViewController: UIViewController {
   }
 
   // MARK: - Initializing the AV Components
+    
+    public func setupUINavigationButtons() {
+        let buttonOpenPhotos = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "iconOptions"), style: .plain, target: self, action: #selector(openPhotosAction))
+        
+        let torchButton = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "iconFlash"), style: .plain, target: self, action: #selector(toggleTorchAction))
+        
+        self.navigationItem.rightBarButtonItems = [buttonOpenPhotos, torchButton]
+        
+        let leftTitle = UIBarButtonItem(title: "QR-Reader", style: .plain, target: nil, action: nil)
+        
+        self.navigationItem.leftBarButtonItem = leftTitle
+        
+    }
 
-  private func setupUIComponentsWithCancelButtonTitle(_ cancelButtonTitle: String) {
+  public func setupUIComponentsWithCancelButtonTitle(_ cancelButtonTitle: String) {
     view.addSubview(builder.readerView.view)
 
     builder.readerView.view.translatesAutoresizingMaskIntoConstraints = false
@@ -179,4 +195,14 @@ public class QRCodeReaderViewController: UIViewController {
   @objc func toggleTorchAction(_ button: ToggleTorchButton) {
     codeReader.toggleTorch()
   }
+    
+    @objc func openPhotosAction(_ button: UIButton) {
+        print("codeviewcontroller: open photos actions")
+        //codeReader.openScanningPhotos()
+        //delegate?.readerDidOpenScanPhotos(self)
+        didOpenScanPhotos?()
+    }
+
+    public var didOpenScanPhotos: (() -> ())?
+    
 }
